@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Lien vers le CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <!-- Affichage des messages -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <form action="save" method="post">
+            <h2>Inscription</h2>
+            
+            <label for="age_min">Age min :</label>
+            <input type="number" id="age_min" name="age_min" required>
+
+            <label for="age_max">Age max :</label>
+            <input type="number" id="age_max" name="age_max" required>
+
+            <label for="pourcentage">Pourcentage de paiement :</label>
+            <input type="number" id="pourcentage" name="pourcentage" required>
+
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
+
+</body>
+</html>
