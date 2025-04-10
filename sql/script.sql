@@ -1,6 +1,3 @@
-- base : 
-   - enfant : id, age_min,age_max, pourcentage_prix 
-
 CREATE TABLE enfant (
     id SERIAL PRIMARY KEY,
     age_min INT NOT NULL,

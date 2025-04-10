@@ -43,11 +43,11 @@ public class LoginController {
         if (admin != null) {
             System.out.println("Login réussi !!!");
             session.setAttribute("user", admin); 
-            return "redirect:/admin/home";
+            return "index";
         } else {
             System.out.println("Échec du login");
             redirectAttributes.addFlashAttribute("error", "Email ou mot de passe incorrect !");
-            return "redirect:/admin/login";
+            return "redirect:/admin/home";
         }
     }
 
