@@ -1,3 +1,6 @@
+* 
+
+
 - Affichage : 
     - input age min
     - input age max 

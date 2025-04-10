@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div th:replace="sidebar :: sidebar"></div>
+
+        <!-- Contenu principal -->
+        <div class="p-4" style="flex-grow: 1;">
+            <h1>Bienvenue sur le Dashboard</h1>
+            <p>Ceci est le contenu principal.</p>
+        </div>
+    </div>
+
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
+

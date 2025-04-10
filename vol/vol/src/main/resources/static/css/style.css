@@ -36,16 +36,16 @@ input {
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 button {
-    background-color: #007BFF;
+    background-color: #021e3c;
     color: white;
     border: none;
     padding: 10px;
-    margin-top: 15px;
-    border-radius: 5px;
+    margin-top: 25px;
+    border-radius: 50px;
     cursor: pointer;
     font-size: 16px;
 }
