@@ -110,7 +110,7 @@
                     <span class="value" th:text="${res.statutReservation}"></span>
                 </div>
 
-                <form th:action="@{/client/annuler}" method="post" class="mt-4 d-grid">
+                <form th:action="@{/api/reservations/annuler}" method="post" class="mt-4 d-grid">
                     <input type="hidden" name="idReservationDetail" th:value="${res.idReservationDetail}" />
                     <button type="submit" class="btn btn-navy">❌ Annuler la réservation</button>
                 </form>
