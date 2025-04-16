@@ -1,10 +1,14 @@
 package com.ticketing.vol.controller.client;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.ticketing.vol.model.client.DetailReservation;
+import com.ticketing.vol.services.client.DetailReservationService;
 import com.ticketing.vol.services.client.PassagerService;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +20,10 @@ public class PassagerController {
     @Autowired
     private PassagerService passagerService;
 
+    @Autowired
+    private DetailReservationService service;
+
+    
     @GetMapping("/index")
     public String login(Model model) {
         return "client/login"; // Fichier login.html (à créer)
@@ -33,9 +41,17 @@ public class PassagerController {
         }
     }
 
-    @GetMapping("/success")
-    public String successPage() {
-        return "client/success"; // Fichier success.html (à créer)
+   @GetMapping("/success")
+    public String successPage(HttpSession session, Model model) {
+        Long passagerId = (Long) session.getAttribute("passagerId");
+        if (passagerId != null) {
+            List<DetailReservation> listes = service.getReservationsByPassagerId(passagerId.intValue());
+            model.addAttribute("reservations", listes);
+        } else {
+            model.addAttribute("error", "Aucun utilisateur connecté.");
+        }
+        return "client/success";
     }
+
 }
 
