@@ -1,5 +1,6 @@
 package com.ticketing.vol.controller.client;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ticketing.vol.model.client.DetailReservation;
@@ -22,5 +23,14 @@ public class DetailReservationController {
         List<DetailReservation> listes =  service.getReservationsByPassagerId(passagerId);
         System.out.println("taille de la liste :" + listes.size());
         return listes;
+    }
+
+     @GetMapping("/export/{idReservationDetail}")
+    public ResponseEntity<DetailReservation> exporterReservation(@PathVariable int idReservationDetail) {
+        DetailReservation reservation = service.getReservationById(idReservationDetail);
+        if (reservation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(reservation);
     }
 }

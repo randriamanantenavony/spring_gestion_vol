@@ -19,5 +19,10 @@ public class DetailReservationService {
     public List<DetailReservation> getReservationsByPassagerId(int passagerId) {
         return repository.findByPassagerId(passagerId);
     }
+
+    public DetailReservation getReservationById(int idReservationDetail) {
+        return repository.findById(idReservationDetail).orElse(null);
+    }
+    
 }
 
