@@ -115,7 +115,11 @@
                     <button type="submit" class="btn btn-navy">❌ Annuler la réservation</button>
                 </form>
 
-               
+                <br>
+                <!-- Bouton Exporter -->
+                <button type="button" class="btn btn-secondary" th:attr="data-id=${res.idReservationDetail}" onclick="exportReservation(this)">
+                    📄 Exporter la réservation
+                </button>
 
 
             </div>
@@ -126,6 +130,32 @@
         Aucune réservation trouvée pour ce passager.
     </div>
 </div>
+
+<script>
+    function exportReservation(button) {
+        const id = button.getAttribute("data-id");
+        fetch(`/api/reservations/export/${id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur lors de l'export");
+            return response.json();
+        })
+        .then(data => {
+            // Afficher ou télécharger les données exportées
+            console.log("Données exportées :", data);
+            alert("Export réussi ! Voir la console pour les données.");
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Erreur lors de l'export.");
+        });
+    }
+</script>
+
 
 </body>
 </html>
