@@ -13,6 +13,7 @@ import java.util.List;
 public class DetailReservationController {
 
     private final DetailReservationService service;
+    private DetailReservation reservationTemporaire; // stockage temporaire
 
     public DetailReservationController(DetailReservationService service) {
         this.service = service;
@@ -20,17 +21,26 @@ public class DetailReservationController {
 
     @GetMapping("/{passagerId}")
     public List<DetailReservation> getByPassagerId(@PathVariable int passagerId) {
-        List<DetailReservation> listes =  service.getReservationsByPassagerId(passagerId);
-        System.out.println("taille de la liste :" + listes.size());
+        List<DetailReservation> listes = service.getReservationsByPassagerId(passagerId);
+        System.out.println("Taille de la liste :" + listes.size());
         return listes;
     }
 
-     @GetMapping("/export/{idReservationDetail}")
+    @GetMapping("/export/{idReservationDetail}")
     public ResponseEntity<DetailReservation> exporterReservation(@PathVariable int idReservationDetail) {
         DetailReservation reservation = service.getReservationById(idReservationDetail);
         if (reservation == null) {
             return ResponseEntity.notFound().build();
         }
+        this.reservationTemporaire = reservation; 
         return ResponseEntity.ok(reservation);
+    }
+
+    @GetMapping("/temp")
+    public ResponseEntity<DetailReservation> getReservationTemporaire() {
+        if (reservationTemporaire == null) {
+            return ResponseEntity.noContent().build(); 
+        }
+        return ResponseEntity.ok(reservationTemporaire);
     }
 }

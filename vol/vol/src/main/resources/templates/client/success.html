@@ -134,6 +134,10 @@
 <script>
     function exportReservation(button) {
         const id = button.getAttribute("data-id");
+        if (!id) {
+            alert("Aucun ID de réservation trouvé !");
+            return;
+        }
         fetch(`/api/reservations/export/${id}`, {
             method: 'GET',
             headers: {
@@ -145,16 +149,31 @@
             return response.json();
         })
         .then(data => {
-            // Afficher ou télécharger les données exportées
-            console.log("Données exportées :", data);
-            alert("Export réussi ! Voir la console pour les données.");
+            console.log("✔️ Détail exporté :", data);
+
+            // 2️⃣ Appel à /temp pour confirmer que la donnée est bien stockée
+            return fetch('/api/reservations/temp', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Erreur lors de la récupération depuis /temp");
+            return response.json();
+        })
+        .then(tempData => {
+            console.log("📦 Récupéré depuis /temp :", tempData);
+            alert("Export réussi ! Voir console.");
         })
         .catch(error => {
-            console.error(error);
-            alert("Erreur lors de l'export.");
+            console.error("❌ Erreur :", error);
+            alert("Erreur pendant l'export ou la récupération.");
         });
     }
 </script>
+
 
 
 </body>
