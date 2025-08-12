@@ -64,72 +64,77 @@
 </head>
 <body>
 
-<div class="container mt-5">
-    <h2 class="text-center mb-5 fw-bold text-prim$y">🧾 Mes Réservations</h2>
+<div class="container mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">
+        🧾 Mes Réservations
+    </h2>
 
-    <div class="row g-4" th:if="${reservations != null && !reservations.isEmpty()}">
-        <div class="col-md-6" th:each="res : ${reservations}">
-            <div class="c$d reservation-c$d p-4">
-                <h5 class="mb-4 fw-semibold text-d$k">
-                    ✈️ Vol <span th:text="${res.volId}"></span> • Réservation #<span th:text="${res.reservationId}"></span>
-                </h5>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" th:if="${reservations != null && !reservations.isEmpty()}">
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300" th:each="res : ${reservations}">
+            <h5 class="text-xl font-semibold text-gray-900 mb-4">
+                ✈️ Vol <span th:text="${res.volId}"></span> • Réservation #<span th:text="${res.reservationId}"></span>
+            </h5>
 
-                <div class="info-row">
-                    <span class="label">📅 Date :</span>
-                    <span class="value" th:text="${res.dateReservation}"></span>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium">📅 Date :</span>
+                    <span class="text-gray-800" th:text="${res.dateReservation}"></span>
                 </div>
 
-                <div class="info-row">
-                    <span class="label">👤 Passager :</span>
-                    <span class="value" th:text="${res.mailPassager}"></span>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium">👤 Passager :</span>
+                    <span class="text-gray-800" th:text="${res.mailPassager}"></span>
                 </div>
 
-                <div class="info-row">
-                    <span class="label">🎟️ Siège :</span>
-                    <span class="value" th:text="${res.typeSiege}"></span>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium">🎟️ Siège :</span>
+                    <span class="text-gray-800" th:text="${res.typeSiege}"></span>
                 </div>
 
-                <div class="price-group my-3">
-                    <div class="price-box">
-                        <span class="label">🧑 Adultes :</span><br>
-                        <span class="value" th:text="${res.siegeAdulte} + ' places'"></span><br>
-                        <span class="label mt-2 d-block">💰 Prix :</span>
-                        <span class="value" th:text="${res.prix} + ' $'"></span>
+                <div class="grid grid-cols-2 gap-4 my-4">
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <span class="text-gray-600 font-medium">🧑 Adultes :</span><br>
+                        <span class="text-gray-800 font-semibold" th:text="${res.siegeAdulte} + ' places'"></span><br>
+                        <span class="text-gray-600 font-medium mt-2 block">💰 Prix :</span>
+                        <span class="text-gray-800 font-semibold" th:text="${res.prix} + ' $'"></span>
                     </div>
-
-                    <div class="price-box">
-                        <span class="label">👶 Enfants :</span><br>
-                        <span class="value" th:text="${res.siegeEnfant} + ' places'"></span><br>
-                        <span class="label mt-2 d-block">💰 Prix :</span>
-                        <span class="value" th:text="${res.prix} + ' $'"></span>
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        <span class="text-gray-600 font-medium">👶 Enfants :</span><br>
+                        <span class="text-gray-800 font-semibold" th:text="${res.siegeEnfant} + ' places'"></span><br>
+                        <span class="text-gray-600 font-medium mt-2 block">💰 Prix :</span>
+                        <span class="text-gray-800 font-semibold" th:text="${res.prix} + ' $'"></span>
                     </div>
                 </div>
 
-                <div class="info-row">
-                    <span class="label">🔖 Statut :</span>
-                    <span class="value" th:text="${res.statutReservation}"></span>
+                <div class="flex justify-between">
+                    <span class="text-gray-600 font-medium">🔖 Statut :</span>
+                    <span class="text-gray-800" th:text="${res.statutReservation}"></span>
                 </div>
+            </div>
 
-                <form th:action="@{/api/reservations/annuler}" method="post" class="mt-4 d-grid">
+            <div class="mt-6 flex space-x-4">
+                <form th:action="@{/api/reservations/annuler}" method="post" class="w-full">
                     <input type="hidden" name="idReservationDetail" th:value="${res.idReservationDetail}" />
-                    <button type="submit" class="btn btn-navy">❌ Annuler la réservation</button>
+                    <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors duration-200">
+                        ❌ Annuler la réservation
+                    </button>
                 </form>
 
-                <br>
-                <!-- Bouton Exporter -->
-                <button type="button" class="btn btn-secondary" th:attr="data-id=${res.idReservationDetail}" onclick="exportReservation(this)">
+                <button type="button" class="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-200" 
+                        th:attr="data-id=${res.idReservationDetail}" onclick="exportReservation(this)">
                     📄 Exporter la réservation
                 </button>
-
-
             </div>
         </div>
     </div>
 
-    <div th:if="${reservations == null || reservations.isEmpty()}" class="alert alert-info text-center mt-5">
+    <div th:if="${reservations == null || reservations.isEmpty()}" class="bg-blue-100 text-blue-800 p-4 rounded-md text-center mt-8">
         Aucune réservation trouvée pour ce passager.
     </div>
 </div>
+
+<!-- Include Tailwind CSS via CDN -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 <script>
     function exportReservation(button) {
@@ -165,7 +170,7 @@
         })
         .then(tempData => {
             console.log("📦 Récupéré depuis /temp :", tempData);
-            alert("Export réussi ! Voir console.");
+            alert("Export réussi ! Voir l'autre onglet pour le fichier.");
         })
         .catch(error => {
             console.error("❌ Erreur :", error);
